@@ -48,9 +48,9 @@ export function Header() {
           </div>
         </div>
 
+        <Refresh />
         <Mint />
         <Revoke />
-        <Refresh />
         <ClearSignature />
       </CardContent>
     </Card>
