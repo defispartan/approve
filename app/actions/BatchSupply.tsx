@@ -1,12 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { AaveV3Sepolia } from "@bgd-labs/aave-address-book";
-import { useAccount, useWaitForTransactionReceipt, useWriteContract } from "wagmi";
-import { useEffect } from "react";
+import { useAccount } from "wagmi";
 import { useTokenContext } from "../state/TokenProvider";
-import { IPool_ABI } from "@bgd-labs/aave-address-book/abis";
+import { IERC20_ABI, IPool_ABI } from "@bgd-labs/aave-address-book/abis";
 import { useSendCalls } from 'wagmi/experimental'
-import { wagmiConfig } from "../state/Web3Provider";
-import { parseEther } from "viem";
+import { encodeFunctionData, maxUint256 } from "viem";
 
 export function BatchSupply() {
 const {address} = useAccount();
@@ -24,27 +22,28 @@ const { sendCalls, isPending } = useSendCalls({
 })
 
 const handleSupply = async () => {
-    sendCalls({
-        calls: [ {
-            to: '0x70997970c51812dc3a010c7d01b50e0d17dc79c8',
-            value: parseEther('0.0000000001')
-          },
-          {
-            data: '0xdeadbeef',
-            to: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
-          },]
-    })
-  /* await supply({
-    address: AaveV3Sepolia.POOL,
+  const approveData = encodeFunctionData({
+    abi: IERC20_ABI,
+    functionName: 'approve',
+    args: [AaveV3Sepolia.POOL,maxUint256]
+  });
+  const supplyData = encodeFunctionData({
     abi: IPool_ABI,
-    functionName: "supply",
-    args: [AaveV3Sepolia.ASSETS.USDC.UNDERLYING, tokenBalance, address || '0x0', 0],
-  }); */
-
+    functionName: 'supply',
+    args: [AaveV3Sepolia.ASSETS.USDC.UNDERLYING, tokenBalance, address || '0x0', 0]
+  });
+    sendCalls({
+      calls: [ {
+          to: AaveV3Sepolia.ASSETS.USDC.UNDERLYING,
+          data: approveData,
+        },
+        {
+          to: AaveV3Sepolia.POOL,
+          data: supplyData,
+        },]
+  })
   }
-
-
-    return ( <Button onClick={handleSupply} disabled={!address || isPending || tokenBalance === BigInt(0)} className="cursor-pointer">
-    {isPending ? "Supplying..." :"Supply"}
+  return ( <Button onClick={handleSupply} disabled={!address || isPending || tokenBalance === BigInt(0)} className="cursor-pointer">
+  {isPending ? "Supplying..." :"Supply"}
   </Button>)
 }
