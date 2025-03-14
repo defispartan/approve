@@ -1,36 +1,31 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## Ethereum Token Approval Demo
 
-## Getting Started
+Demo frontend to demonstrate Ethereum token approval methods:
 
-First, run the development server:
+- [Approve](#approve)
+- [Permit](#permit)
+- [Batched Approval](#batched-approval)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### Approve
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+ERC-20 token approval transaction: `IERC20(tokenAddress).approve(spender, allowance)`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Requires execution of onchain transaction prior to transferring tokens.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Permit
 
-## Learn More
+EIP-2612 signed token approval.
 
-To learn more about Next.js, take a look at the following resources:
+Requires wallet to sign message and signature is bundled with token transfer transaction.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Batched Approval
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+EIP-5792 - wallet API to enable apps to request multiple batched action with `wallet_sendCalls`
+| - EIP-4337 - Smart contract wallet
+| - EIP-7702 - EOA wallet (private key)
 
-## Deploy on Vercel
+The demo app sends EIP-5792 request to wallet and wallet must implement corresponding methods to perform batch transaction depending on wallet type.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Demo Details
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Demo app is a NextJS frontend using connectkit and wagmi for Web3 interactions. The app uses Sepolia testnet, and supplies tokens to Aave V3 as a demonstration of the token transfer step.
