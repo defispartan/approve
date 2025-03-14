@@ -26,9 +26,9 @@ Requires wallet to sign message and signature is bundled with token transfer tra
 
 EIP-5792 - wallet API to enable apps to request multiple batched action with `wallet_sendCalls`
 
-|---- EIP-4337 - Smart contract wallet&#10;
+|---- EIP-4337 - Smart contract wallet
 
-|---- EIP-7702 - EOA wallet (private key)&#10;
+|---- EIP-7702 - EOA wallet (private key)
 
 The demo app sends EIP-5792 request to wallet and wallet must implement corresponding methods to perform batch transaction depending on wallet type.
 

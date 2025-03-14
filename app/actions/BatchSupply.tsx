@@ -8,7 +8,7 @@ import { encodeFunctionData, maxUint256 } from "viem";
 
 export function BatchSupply() {
 const {address} = useAccount();
-const { refreshData, tokenAllowance, tokenBalance } = useTokenContext();
+const { refreshData, tokenBalance } = useTokenContext();
 const { sendCalls, isPending } = useSendCalls({
     mutation: {
         onSuccess: hash => {
