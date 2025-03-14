@@ -1,7 +1,7 @@
 ## Ethereum Token Approval Demo
 
 <p align="center">
-  <img src="https://i.ibb.co/r2mxKW1J/Approve-Demo.png" width="500" alt="approve demo screenshot">
+  <img src="https://i.ibb.co/r2mxKW1J/Approve-Demo.png" width="1500" alt="approve demo screenshot">
 </p>
 
 Demo frontend to demonstrate Ethereum token approval methods:
