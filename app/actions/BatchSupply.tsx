@@ -30,11 +30,11 @@ const handleSupply = async () => {
   const supplyData = encodeFunctionData({
     abi: IPool_ABI,
     functionName: 'supply',
-    args: [AaveV3Sepolia.ASSETS.USDC.UNDERLYING, tokenBalance, address || '0x0', 0]
+    args: [AaveV3Sepolia.ASSETS.AAVE.UNDERLYING, tokenBalance, address || '0x0', 0]
   });
     sendCalls({
       calls: [ {
-          to: AaveV3Sepolia.ASSETS.USDC.UNDERLYING,
+          to: AaveV3Sepolia.ASSETS.AAVE.UNDERLYING,
           data: approveData,
         },
         {

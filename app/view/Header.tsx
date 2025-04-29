@@ -35,11 +35,11 @@ export function Header() {
         <h3 className="text-xl font-bold mb-4">Balances</h3>
         <div className="space-y-2 mb-4">
           <div className="flex justify-between">
-            <span>USDC Balance:</span>
+            <span>AAVE Balance:</span>
             <span className="font-medium">{formatBalance(tokenBalance)}</span>
           </div>
           <div className="flex justify-between">
-            <span>aUSDC Balance:</span>
+            <span>aAAVE Balance:</span>
             <span className="font-medium">{formatBalance(aTokenBalance)}</span>
           </div>
           <div className="flex justify-between">

@@ -34,7 +34,7 @@ const handleSupply = async () => {
             address: AaveV3Sepolia.POOL,
             abi: IPool_ABI,
             functionName: "supplyWithPermit",
-            args: [AaveV3Sepolia.ASSETS.USDC.UNDERLYING, signature.amount, address || '0x0', 0, BigInt(signature?.deadline), Number(signature.v), signature.r as `0x${string}`, signature.s as `0x${string}`],
+            args: [AaveV3Sepolia.ASSETS.AAVE.UNDERLYING, signature.amount, address || '0x0', 0, BigInt(signature?.deadline), Number(signature.v), signature.r as `0x${string}`, signature.s as `0x${string}`],
         });
     } else {
         console.error("Invalid Signature")

@@ -26,10 +26,10 @@ export function Permit() {
     if (!address) return;
 
     const domain = {
-      name: "USDC",
+      name: "AAVE",
       version: "1",
       chainId: 11155111,
-      verifyingContract: AaveV3Sepolia.ASSETS.USDC.UNDERLYING,
+      verifyingContract: AaveV3Sepolia.ASSETS.AAVE.UNDERLYING,
     };
 
     const types = {

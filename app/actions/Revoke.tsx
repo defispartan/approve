@@ -26,7 +26,7 @@ const { isLoading: isConfirming, isSuccess: isConfirmed } =
 
 const revokeAllowance = async () => {
   await revoke({
-    address: AaveV3Sepolia.ASSETS.USDC.UNDERLYING,
+    address: AaveV3Sepolia.ASSETS.AAVE.UNDERLYING,
     abi: IERC20_ABI,
     functionName: "approve",
     args: [AaveV3Sepolia.POOL, BigInt(0)],

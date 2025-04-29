@@ -12,7 +12,7 @@ const { updateTokenBalance } = useTokenContext();
 
 
 const {
-  writeContract: mintUSDC,
+  writeContract: mintAAVE,
   data: hash
 } = useWriteContract();
 
@@ -26,11 +26,11 @@ const { isLoading: isConfirming, isSuccess: isConfirmed } =
   },[isConfirmed, updateTokenBalance])
 
 const handleMint = async () => {
-  await mintUSDC({
+  await mintAAVE({
       address: AaveV3Sepolia.FAUCET,
       abi: FaucetAbi,
       functionName: 'mint',
-      args: [AaveV3Sepolia.ASSETS.USDC.UNDERLYING, address || zeroAddress, BigInt(10000000000)]
+      args: [AaveV3Sepolia.ASSETS.AAVE.UNDERLYING, address || zeroAddress, BigInt(10000000000)]
     });
   }
 

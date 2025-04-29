@@ -59,36 +59,36 @@ export const TokenProvider: React.FC<TokenProviderProps> = ({ children }) => {
   const [signature, setSignatureState] = useState<Signature | undefined>(undefined);
   const [nonce, setNonce] = useState<number>(0);
 
-  const { data: usdcBalance, refetch: refetchUsdcBalance } = useBalance({
+  const { data: aaveBalance, refetch: refetchAaveBalance } = useBalance({
     address,
-    token: AaveV3Sepolia.ASSETS.USDC.UNDERLYING,
+    token: AaveV3Sepolia.ASSETS.AAVE.UNDERLYING,
   });
 
-  const { data: aUsdcBalance, refetch: refetchAUsdcBalance } = useBalance({
+  const { data: aAaveBalance, refetch: refetchAAaveBalance } = useBalance({
     address,
-    token: AaveV3Sepolia.ASSETS.USDC.A_TOKEN,
+    token: AaveV3Sepolia.ASSETS.AAVE.A_TOKEN,
   });
 
   const { data: allowance, refetch: refetchAllowance } = useReadContract({
-    address: AaveV3Sepolia.ASSETS.USDC.UNDERLYING,
+    address: AaveV3Sepolia.ASSETS.AAVE.UNDERLYING,
     abi: IERC20_ABI,
     functionName: "allowance",
     args: [address || "0x0", AaveV3Sepolia.POOL],
   });
 
   const { data: fetchedNonce, refetch: refetchNonce } = useReadContract({
-    address: AaveV3Sepolia.ASSETS.USDC.UNDERLYING,
+    address: AaveV3Sepolia.ASSETS.AAVE.UNDERLYING,
     abi: EIP2612Abi,
     functionName: "nonces",
     args: [address || "0x0"],
   });
 
   useEffect(() => {
-    if (usdcBalance && usdcBalance.value !== undefined) {
-      setTokenBalance(usdcBalance.value);
+    if (aaveBalance && aaveBalance.value !== undefined) {
+      setTokenBalance(aaveBalance.value);
     }
-    if (aUsdcBalance && aUsdcBalance.value !== undefined) {
-      setATokenBalance(aUsdcBalance.value);
+    if (aAaveBalance && aAaveBalance.value !== undefined) {
+      setATokenBalance(aAaveBalance.value);
     }
     if (allowance !== undefined) {
       setTokenAllowance(allowance);
@@ -96,21 +96,21 @@ export const TokenProvider: React.FC<TokenProviderProps> = ({ children }) => {
     if (fetchedNonce !== undefined) {
       setNonce(Number(fetchedNonce));
     }
-  }, [usdcBalance, aUsdcBalance, allowance, fetchedNonce]);
+  }, [aaveBalance, aAaveBalance, allowance, fetchedNonce]);
 
   const updateTokenBalance = useCallback(async (): Promise<void> => {
-    const result = await refetchUsdcBalance();
+    const result = await refetchAaveBalance();
     if (result.data && result.data.value !== undefined) {
       setTokenBalance(result.data.value);
     }
-  }, [refetchUsdcBalance]);
+  }, [refetchAaveBalance]);
 
   const updateATokenBalance = useCallback(async (): Promise<void> => {
-    const result = await refetchAUsdcBalance();
+    const result = await refetchAAaveBalance();
     if (result.data && result.data.value !== undefined) {
       setATokenBalance(result.data.value);
     }
-  }, [refetchAUsdcBalance]);
+  }, [refetchAAaveBalance]);
 
   const updateTokenAllowance = useCallback(async (): Promise<void> => {
     const result = await refetchAllowance();
