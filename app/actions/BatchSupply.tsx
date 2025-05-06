@@ -3,7 +3,7 @@ import { AaveV3Sepolia } from "@bgd-labs/aave-address-book";
 import { useAccount, useChainId, useSendCalls } from "wagmi";
 import { useTokenContext } from "../state/TokenProvider";
 import { IERC20_ABI, IPool_ABI } from "@bgd-labs/aave-address-book/abis";
-import { encodeFunctionData, maxUint256, toHex } from "viem";
+import { encodeFunctionData, toHex } from "viem";
 
 const paymasterUrl = process.env.NEXT_PUBLIC_PAYMASTER_URL as string;
 
@@ -27,7 +27,7 @@ const handleSupply = async () => {
   const approveData = encodeFunctionData({
     abi: IERC20_ABI,
     functionName: 'approve',
-    args: [AaveV3Sepolia.POOL,maxUint256]
+    args: [AaveV3Sepolia.POOL,tokenBalance]
   });
   const supplyData = encodeFunctionData({
     abi: IPool_ABI,
