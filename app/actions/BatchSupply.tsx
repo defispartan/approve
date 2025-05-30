@@ -4,6 +4,7 @@ import { useAccount, useChainId, useSendCalls } from "wagmi";
 import { useTokenContext } from "../state/TokenProvider";
 import { IERC20_ABI, IPool_ABI } from "@bgd-labs/aave-address-book/abis";
 import { encodeFunctionData, toHex } from "viem";
+import { useState } from "react";
 
 const paymasterUrl = process.env.NEXT_PUBLIC_PAYMASTER_URL as string;
 
@@ -11,6 +12,7 @@ export function BatchSupply() {
 const {address} = useAccount();
 const chainId = useChainId();
 const { refreshData, tokenBalance } = useTokenContext();
+const [enablePaymaster, setEnablePaymaster] = useState(true);
 const { sendCalls, isPending } = useSendCalls({
     mutation: {
         onSuccess: hash => {
@@ -43,17 +45,31 @@ const handleSupply = async () => {
           to: AaveV3Sepolia.POOL,
           data: supplyData,
         },],
-        capabilities: {
+        capabilities: enablePaymaster ? {
           paymasterService: {
             [toHex(chainId)]: {
               optional: true,
               url: paymasterUrl,
             }
           }
-      },  
+        } : undefined
   })
   }
-  return ( <Button onClick={handleSupply} disabled={!address || isPending || tokenBalance === BigInt(0)} className="cursor-pointer">
-  {isPending ? "Supplying..." :"Supply"}
-  </Button>)
+  return (
+    <div className="flex flex-col gap-2">
+      <div className="flex items-center gap-2">
+        <input
+          type="checkbox"
+          id="paymaster"
+          checked={enablePaymaster}
+          onChange={(e) => setEnablePaymaster(e.target.checked)}
+          className="h-4 w-4"
+        />
+        <label htmlFor="paymaster" className="text-sm">Enable Paymaster</label>
+      </div>
+      <Button onClick={handleSupply} disabled={!address || isPending || tokenBalance === BigInt(0)} className="cursor-pointer">
+        {isPending ? "Supplying..." :"Supply"}
+      </Button>
+    </div>
+  )
 }
